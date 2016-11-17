@@ -26,13 +26,13 @@ array2d =[]
 for row in reader :
 #        print tables[row[0].decode('utf-8')] #for debug
     array2d.append([])
+    array2d[len(array2d)-1].append('../data/'+argvs[2]+'/'+row[1])
     array2d[len(array2d)-1].append(tables[row[0].decode('utf-8')])
-    array2d[len(array2d)-1].append(row[1])
 f.close()
 
 
 
-outcsvfile = (argvs[2])
+outcsvfile = (argvs[3])
 f = open(outcsvfile, 'w')
 writer = csv.writer(f, lineterminator='\n')
 writer.writerows(array2d)
