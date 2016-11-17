@@ -8,7 +8,7 @@ require 'time'
 
 # DIST_DIR="imgs.#{Time.now.to_i}"
 DIST_DIR="imgs.chacked"
-DIR="$HOME/Dropbox/pokemon-contest/momo_mind/crawler"
+DIR="$HOME/Dropbox/pokemon-contest/crawler"
 
 #usage: ruby classify.rb download.csv (grade(0-2)) >> (training,test,evaluation).csv
 

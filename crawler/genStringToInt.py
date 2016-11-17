@@ -3,6 +3,7 @@
 # vim:fenc=utf-8
 import csv
 import sys
+import os.path
 
 #sys.setdefaultencoding('utf-8')
 argvs = sys.argv
@@ -26,7 +27,12 @@ array2d =[]
 for row in reader :
 #        print tables[row[0].decode('utf-8')] #for debug
     array2d.append([])
-    array2d[len(array2d)-1].append('../data/'+argvs[2]+'/'+row[1])
+    path,ext = os.path.splitext(row[1])
+#    print(ext)
+    if (ext == ".JPEG" or ext == ".JPG" or ext == ".jpg" or ext == ".jpeg") :
+        array2d[len(array2d)-1].append('../data/'+argvs[2]+'/'+path+'.jpg')
+    elif (ext == ".PNG" or ext == ".png") :
+        array2d[len(array2d)-1].append('../data/'+argvs[2]+'/'+path+'.png')
     array2d[len(array2d)-1].append(tables[row[0].decode('utf-8')])
 f.close()
 
