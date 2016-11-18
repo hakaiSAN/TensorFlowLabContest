@@ -18,12 +18,12 @@ NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 500
 CHANNELS = 1
 
 NAMES = {
-    0: ["ゼニガメ", "zenigame"],
-    1: ["ワニノコ", "waninoko"],
-    2: ["ミズゴロウ", "mizugorou"],
-    3: ["ポッチャマ", "pocchama"],
-    4: ["ミジュマル", "mijumaru"],
-    5: ["ケロマツ", "keromatsu"],
+    0: [u"ゼニガメ", "zenigame"],
+    1: [u"ワニノコ", "waninoko"],
+    2: [u"ミズゴロウ", "mizugorou"],
+    3: [u"ポッチャマ", "pocchama"],
+    4: [u"ミジュマル", "mijumaru"],
+    5: [u"ケロマツ", "keromatsu"],
 }
 
 def load_data_for_test(csv, batch_size):

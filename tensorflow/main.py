@@ -13,7 +13,7 @@ import os
 import data_input
 import model
 
-LOGDIR = '/tmp/data.%s' % datetime.now().isoformat()
+LOGDIR = './tmp/data.%s' % datetime.now().isoformat()
 print LOGDIR
 
 flags = tf.app.flags
@@ -71,7 +71,8 @@ def main(ckpt = None):
 
             if step % 1000 == 0 or (step + 1) == FLAGS.max_steps or loss_result == 0:
                 checkpoint_path = os.path.join(FLAGS.train_dir, 'model.ckpt')
-                saver.save(sess, checkpoint_path, global_step=step)
+                save_path = saver.save(sess, checkpoint_path, global_step=step)
+                print('%s saved' % save_path)
 
             if loss_result == 0:
                 print('loss is zero')

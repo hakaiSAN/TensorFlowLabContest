@@ -9,17 +9,26 @@ import os
 import data_input
 import model
 
+IMAGE_LONG_SIZE = 600
+IMAGE_SHORT_SIZE = 400 
+NUM_CLASS = 6
+NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 500
+CHANNELS = 1
+
 CHANNELS = 1 #grayscale
 
 
 def evaluation(imgpath, ckpt_path):
     tf.reset_default_graph()
 
-    jpeg = tf.read_file(filename)
+    jpeg = tf.read_file(imgpath)
     image = tf.image.decode_jpeg(jpeg, channels=CHANNELS )
     #この時点でimageはuint8 tensor型
     image = tf.cast(image, tf.float32)
-    image.reshape([IMAGE_LONG_SIZE, IMAGE_SHORT_SIZE, CHANNELS]) #大きさの統一 データのピクセル数合わせておけば…
+    image.set_shape([data_input.IMAGE_LONG_SIZE, data_input.IMAGE_SHORT_SIZE, CHANNELS])
+    image = tf.image.resize_images(image, data_input.DST_LONG_SIZE, data_input.DST_SHORT_SIZE)
+    image = tf.image.per_image_whitening(image)
+    image = tf.reshape(image, [-1, data_input.DST_LONG_SIZE * data_input.DST_SHORT_SIZE * CHANNELS])
 
     logits = model.inference_deep(image, 1.0, data_input.DST_LONG_SIZE, data_input.DST_SHORT_SIZE, data_input.NUM_CLASS)
     sess = tf.InteractiveSession()
@@ -39,7 +48,7 @@ def evaluation(imgpath, ckpt_path):
 
     pokemons = []
     for idx, rate in enumerate(rates):
-        name = mcz_input.NAMES[idx]
+        name = data_input.NAMES[idx]
         pokemons.append({
             'name_ascii': name[1],
             'name': name[0],
@@ -66,4 +75,4 @@ if __name__ == '__main__':
     imgfile2 = sys.argv[3]
     #main([imgfile], ckpt_path)
     #main2(imgfile1, ckpt_path)
-    print execute([imgfile1,imgfile2], '.', ckpt_path)
+    print execute([imgfile1,imgfile2], '../data/evaluation', ckpt_path)
